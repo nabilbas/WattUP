@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Titre par défaut{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="z-index: 1000; position: relative;">
+    <a class="navbar-brand" href="#">
+        <img src="{% static 'img/WattUP.svg' %}" alt="Logo" height="30" class="d-inline-block align-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Nos Produits
+                </a>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    {% for section in sections %}
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item" href="#">{{ section.name }}</a>
+                            <ul class="dropdown-menu">
+                                {% for range in section.range_set.all %}
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item" href="#">{{ range.name }}</a>
+                                        <ul class="dropdown-menu">
+                                            {% for borne in range.borne_set.all %}
+                                                <li><a class="dropdown-item" href="#">{{ borne.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">Les industries</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Nouvelles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Témoignages de réussite de clients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Blog</a>
+            </li>
+        </ul>
+    </div>
+    <!-- Add search icon on the right -->
+    <a id="searchIcon" href="#" class="ml-auto">
+        <img src="{% static 'img/Search.svg' %}" alt="Search Icon" height="30">
+    </a>
+</nav>
+<div id="searchContainer" class="container mt-4 search-container-big" style="display: none;">
+    <div class="live-search-header d-flex flex-row flex-nowrap justify-content-between">
+        <div class="live-search-logo-wrapper d-flex flex-row flex-nowrap align-items-center">
+            <img class="live-search-logo" src="{% static 'img/WattUPBLK.svg' %}" width="265" height="40" alt="WattUP">
+            <label>
+            <span class="sr-only">Write what you are searching for</span>
+            <input type="text" name="s" tabindex="0" class="live-search-input input-large">
+        </label>
+        </div>
+        <button id="closeSearch" class="live-search-close-button" aria-label="Close search" tabindex="0">
+            <img class="live-search-close-icon" src="{% static 'img/crossclose.svg' %}" width="40" height="40" role="presentation">
+        </button>
+    </div>
+</div>
+<div class="homepage" style="z-index: 0;">
+    <video autoplay muted loop playsinline>
+        <source src="{% static 'img/PRESENTAION.mp4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="homepage-content">
+        <!-- Content for your homepage goes here -->
+    </div>
+</div>
+
+
+<!-- Main Content -->
+<div>
+    {% block content %}{% endblock %}:
+</div>
+
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Search container toggle
+    document.getElementById('searchIcon').addEventListener('click', function(e) {
+        e.preventDefault();
+        let searchContainer = document.getElementById('searchContainer');
+        searchContainer.style.display = 'block';
+        setTimeout(function() {
+            searchContainer.style.opacity = "1";
+            searchContainer.style.transform = "translateY(0)";  /* Reset the position */
+        }, 50);
+    });
+
+    document.getElementById('closeSearch').addEventListener('click', function(e) {
+        e.preventDefault();
+        let searchContainer = document.getElementById('searchContainer');
+        searchContainer.style.opacity = "0";
+        searchContainer.style.transform = "translateY(-20px)";
+        setTimeout(function() {
+            searchContainer.style.display = 'none';
+        }, 500);
+    });
+
+    $(document).ready(function() {
+    var hideDelay = 200;  // 200ms delay before hiding the submenu
+    var hideTimeout;
+
+    // Main dropdown toggle (first level)
+    $('ul.navbar-nav li.dropdown > a').hover(function(e) {
+        clearTimeout(hideTimeout);
+        const dropdownMenu = $(this).next('.dropdown-menu');
+        $('.dropdown-menu').not(dropdownMenu).stop(true, true).slideUp();
+        dropdownMenu.stop(true, true).slideDown();
+    }, function() {
+        hideTimeout = setTimeout(function() {
+            $('.dropdown-menu').stop(true, true).slideUp();
+        }, hideDelay);
+    });
+
+    // Handle sub-menus: show on hover (second level and deeper)
+    $('.dropdown-submenu > a').hover(function() {
+        clearTimeout(hideTimeout);
+        const subDropdown = $(this).next('.dropdown-menu');
+        $('.dropdown-menu').not(subDropdown).not($(this).parents('.dropdown-menu')).stop(true, true).slideUp();
+        subDropdown.stop(true, true).slideDown();
+    }, function() {
+        hideTimeout = setTimeout(function() {
+            $('.dropdown-menu').not($(this).parents('.dropdown-menu')).stop(true, true).slideUp();
+        }.bind(this), hideDelay);
+    });
+
+    // Close all dropdowns if clicked outside the navbar
+    $(document).on('click', function(event) {
+        if (!$(event.target).closest('.navbar').length) {
+            $('.dropdown-menu').stop(true, true).slideUp();
+        }
+    });
+
+    // Close all dropdowns and navigate when a final dropdown item is clicked
+    $('.dropdown-menu a:not(.dropdown-toggle)').on('click', function() {
+        $('.dropdown-menu').stop(true, true).slideUp();
+        // Handle navigation or any other behavior you want here.
+    });
+});
+
+</script>
+
+
+
+
+
+
+<!-- Footer -->
+<footer class="footer mt-auto py-3 bg-dark">
+    <div class="container">
+        <span class="text-muted">© 2023 DawnnConsulting. All rights reserved.</span>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+    height: 100px;
+    opacity: 0.9;
+    background-color: rgba(0, 0, 0, 1) !important;
+}
+
+.navbar-nav > li {
+    margin-right: 10px;
+}
+
+.navbar-nav {
+    margin-left: 60px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 18px;
+}
+
+/* Footer styles */
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.footer .container {
+    padding: 10px;
+}
+
+.text-muted {
+    color: #aaa;
+}
+
+/* Navbar Styles */
+.navbar-custom {
+    height: 40px;
+    background-color: rgba(0, 0, 0, 1); /* Black with 50% opacity */
+}
+
+/* Navbar link styles */
+.navbar-custom .navbar-nav .nav-link {
+    color: white;
+    transition: color 0.3s;
+}
+
+.navbar-custom .navbar-nav .nav-link:hover {
+    color: #ddd; /* Change this color if you want a different hover effect */
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+    opacity: 1;
+}
+
+.search-container-big {
+    height: 200px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 0;
+    transform: translateY(-20px); /* This slightly moves the container up */
+}
+
+.live-search-header {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.live-search-input {
+    width: 400px !important;
+    margin-top: 40px;
+    margin-left: 80px;
+    height: 40px;
+    font-size: 1.2em;
+}
+
+.live-search-logo {
+    margin-right: 50px !important;
+}
+
+.v2ccloud-container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.v2ccloud-image {
+    width: 100%;
+    display: block;
+}
+
+.homepage {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.homepage video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.homepage video:hover {
+    cursor: url('/static/img/Cursor.png'), auto;
+}
+
+.homepage-content {
+    position: relative;
+    z-index: 1;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu a::after {
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 6px;
+    top: .8em;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-left: .1rem;
+    margin-right: .1rem;
+    display: none; /* Hide by default */
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Adjusted Dropdown Hover Effect */
+.dropdown-menu {
+    transition: opacity 0.3s, transform 0.3s;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.navbar-nav li.dropdown:hover > .dropdown-menu {
+    display: block; /* Show on hover */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Handle submenus */
+.navbar-nav .dropdown-submenu:hover > .dropdown-menu {
+    display: block; /* Show on hover */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Additional styles for clicked dropdown */
+.clicked-dropdown {
+    display: block !important;
+}

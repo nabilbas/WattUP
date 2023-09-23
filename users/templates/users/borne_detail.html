@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ borne.name }}</h1>
+<img src="{{ borne.image.url }}" alt="{{ borne.name }}">
+<p>{{ borne.description }}</p>
+<p>Price: ${{ borne.price }}</p>
+<a href="#" class="btn btn-primary">Purchase</a>
+{% endblock %}

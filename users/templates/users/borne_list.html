@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<h1>Nos Produits</h1>
+
+{% for section in sections %}
+    <h2>{{ section.name }}</h2>
+    {% for range in section.range_set.all %}
+        <h3>{{ range.name }}</h3>
+        {% for borne in range.borne_set.all %}
+            <div>
+                <h4>{{ borne.name }}</h4>
+                <!-- You can add more details about each borne here if needed -->
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
+
+{% endblock %}

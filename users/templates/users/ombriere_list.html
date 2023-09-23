@@ -1,0 +1,24 @@
+
+{% extends "base_generic.html" %}
+
+{% block title %}Liste des Ombrières Photovoltaïques{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Liste des Ombrières Photovoltaïques</h1>
+    <div class="row">
+    {% for ombriere in ombrieres %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ombriere.taille }}</h5>
+                    <p class="card-text">{{ ombriere.description }}</p>
+                    <p class="card-text"><strong>Prix :</strong> {{ ombriere.prix }}€</p>
+                    <a href="#" class="btn btn-primary">Détails</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
